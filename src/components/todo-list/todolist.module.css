@@ -1,5 +1,5 @@
 .header{
-    background-image: url(/asset/bg-mobile-dark.jpg);
+    background-image: url(/assets/bg-mobile-dark.jpg);
     background-repeat: no-repeat;
     height: 201px;
 }
@@ -83,6 +83,8 @@
     width: 327px;
     height: 48px;
 }
+
+/*css del boton*/
 .filter{
     background: none;
     border: none;
@@ -92,9 +94,10 @@
     cursor: pointer;
 }
 
-.filter-active{
+.filter:active{
     color: var(--filter-active);
 }
+    
 
 /*light mode*/
 body.light {

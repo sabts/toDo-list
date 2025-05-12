@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { v4 } from "uuid";
-import TASKS_LIST from "../../constants/tasklist";
+import {TASKS_LIST} from "../../constants/tasklist";
 import styles from "./todolist.module.css";
 import CreatedTask from "../createdtask/CreatedTask";
+import Button from "../button/Button";
 
 const TodoList = () => {
   const [task, setTask] = useState("");
-  const [toDos, setToDos] = useState([]);
+  const [toDos, setToDos] = useState(TASKS_LIST);
 
   return (
     <>
-      <div>
+      <div className={styles["header"]}>
         <h1>TODO</h1>
         <img src="/assets/icon-moon.svg" />
       </div>
       <form
         onSubmit={event => {
           event.preventDefault();
-          createTask(task, toDos, setToDos);
-          setTask("");
+          createTask(task, toDos, setToDos, setTask);
         }}
         className="form"
       >
@@ -38,29 +38,31 @@ const TodoList = () => {
         {toDos.map(task => (
           <CreatedTask
             key={task.id}
-            task={task}  // Pasamos solo un task
-            toDos={toDos}  // Pasamos el array completo
-            setToDos={setToDos}  // Pasamos la función para actualizar el estado
+            task={task}
+            toDos={toDos}  
+            setToDos={setToDos}  
+            completeTask={completeTask}
+            deleteTask={deleteTask}
           />
         ))}
       </div>
 
-      <div>
-        <span>1 item left</span>
-        <span>Clear Complete</span>
+      <div className={styles["tasks-footer"]}>
+        <span>{countItemsLeft(toDos)} item left</span>
+        <span onClick={() => clearCompletedTasks(toDos, setToDos)}>Clear Complete</span>
       </div>
 
-      <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>completed</button>
+      <div className={styles["filters"]}>
+        <Button>All</Button>
+        <Button>Active</Button>
+        <Button>Complete</Button>
       </div>
     </>
   );
 };
 
 // Creación de tarea
-const createTask = (task, toDos, setToDos) => {
+const createTask = (task, toDos, setToDos, setTask) => {
   if (task === "") return;
 
   const newTask = {
@@ -73,6 +75,28 @@ const createTask = (task, toDos, setToDos) => {
 
   const newToDos = [...toDos, newTask];
   setToDos(newToDos);
+  setTask("")
 };
 
-export default TodoList;
+const countItemsLeft = (toDos) => {
+  return toDos.filter(task => !task.completed).length;
+};
+
+const clearCompletedTasks = (toDos, setToDos) => {
+  const activeTasks = toDos.filter(task => !task.completed);
+  setToDos(activeTasks);
+};
+
+const completeTask = (id, toDos, setToDos) => {
+  const updatedTasks = toDos.map(task =>
+    task.id === id ? { ...task, completed: !task.completed } : task
+  );
+  setToDos(updatedTasks);
+};
+
+const deleteTask = (id, toDos, setToDos) => {
+  const updatedTasks = toDos.filter(task => task.id !== id);
+  setToDos(updatedTasks);
+};
+
+export default TodoList

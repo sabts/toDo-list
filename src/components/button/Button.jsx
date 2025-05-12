@@ -1,5 +1,5 @@
-const Button = () => {
-return<button>Click me</button>
+const Button = ({children, action}) => {
+return<button onClick={action}>{children}</button>
 }
 
 export default Button
