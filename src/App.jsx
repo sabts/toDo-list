@@ -1,4 +1,3 @@
-import Button from "./components/button/Button";
 import TodoList from "./components/todo-list/TodoList";
 
 const App = () => {

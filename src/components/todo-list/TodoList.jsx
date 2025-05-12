@@ -3,6 +3,7 @@ import { useState } from "react";
 const TodoList = () => {
   const [task, setTask] = useState("");
   const [completeTask, setCompleteTask] = useState(false);
+
   return (
     <>
       <div>
@@ -15,7 +16,7 @@ const TodoList = () => {
           type="text"
           placeholder="Create a new todo..."
           id="inputtext"
-          value="{task}"
+          value={task}
         />
       </form>
 
@@ -42,4 +43,7 @@ const TodoList = () => {
     </>
   );
 };
+
+const todoListTaskText = ({ task }) => {};
+
 export default TodoList;
