@@ -6,15 +6,18 @@ import CreatedTask from "../createdtask/CreatedTask";
 import Button from "../button/Button";
 
 const TodoList = () => {
-  const [task, setTask] = useState("");
-  const [toDos, setToDos] = useState(TASKS_LIST);
-
+  const [task, setTask] = useState(""); //el individual 
+  const [toDos, setToDos] = useState(TASKS_LIST); //el grupo
+  const [filteredTasks, setFilteredTasks] = useState(TASKS_LIST);
   return (
     <>
       <div className={styles["header"]}>
+        <div className={styles["header-content"]}>
         <h1>TODO</h1>
         <img src="/assets/icon-moon.svg" />
+        </div>
       </div>
+      <main className={styles["main"]}>
       <form
         onSubmit={event => {
           event.preventDefault();
@@ -32,10 +35,8 @@ const TodoList = () => {
           className={styles["input-task"]}
         />
       </form>
-
-      {/* Render tasks */}
       <div>
-        {toDos.map(task => (
+        {filteredTasks.map(task => (
           <CreatedTask
             key={task.id}
             task={task}
@@ -46,17 +47,16 @@ const TodoList = () => {
           />
         ))}
       </div>
-
       <div className={styles["tasks-footer"]}>
         <span>{countItemsLeft(toDos)} item left</span>
         <span onClick={() => clearCompletedTasks(toDos, setToDos)}>Clear Complete</span>
       </div>
-
       <div className={styles["filters"]}>
-        <Button>All</Button>
-        <Button>Active</Button>
-        <Button>Complete</Button>
+          <Button action={() => setFilteredTasks(filterAll(toDos))}>All</Button>
+          <Button action={() => setFilteredTasks(filterActive(toDos))}>Active</Button>
+          <Button action={() => setFilteredTasks(filterCompleted(toDos))}>Complete</Button>
       </div>
+      </main>
     </>
   );
 };
@@ -97,6 +97,18 @@ const completeTask = (id, toDos, setToDos) => {
 const deleteTask = (id, toDos, setToDos) => {
   const updatedTasks = toDos.filter(task => task.id !== id);
   setToDos(updatedTasks);
+};
+
+const filterActive = (toDos) => {
+  return toDos.filter(task => !task.completed);
+};
+
+const filterCompleted = (toDos) => {
+  return toDos.filter(task => task.completed);
+};
+
+const filterAll = (toDos) => {
+  return toDos;
 };
 
 export default TodoList

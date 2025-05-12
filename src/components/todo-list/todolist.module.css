@@ -84,21 +84,6 @@
     height: 48px;
 }
 
-/*css del boton*/
-.filter{
-    background: none;
-    border: none;
-    color: var(--text-color-completed);
-    font-weight: bold;
-    font-size: 0.875rem;
-    cursor: pointer;
-}
-
-.filter:active{
-    color: var(--filter-active);
-}
-    
-
 /*light mode*/
 body.light {
     background-color: var(--body-bg-light);
