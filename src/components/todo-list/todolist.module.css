@@ -53,54 +53,7 @@
     border: none;
     outline: none;
     box-shadow: 0 15px 15px -5px var(--tasks-shadow);
-}
-
-.task-container{
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 3rem;
-    width: 327px;
-    padding: 1rem 1.25rem;
-    background-color: var(--task-bg-dark);
-    border-bottom: 1px solid rgba(151, 151, 151, 0.3);
-    cursor: pointer;
-}
-
-.task-check{
-display: none;
-}
-.task-text{
-    padding-left: 2.5rem;
-    color: var(--placeholder-color);
-}
-
-.task-text::after {
-    content: '';
-    position: absolute;
-    top: 0.8rem;
-    left: 1.25rem;
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--text-color-completed);
-    border-radius: 50%;
-}
-
-.task-check:checked + .task-text {
-    text-decoration: line-through;
-    color: var(--text-color-completed);
-}
-
-.task-check:checked + .task-text::after {
-    background-image: url(/asset/icon-check.svg), linear-gradient(45deg, #55ddff, #c058f3);
-    background-repeat: no-repeat;
-    background-size: 10px 8px, cover;
-    background-position: center;
-    border: none;
-    text-decoration: line-through;
-    color: var(--text-color-completed);
-}    
+}  
 .class-delete{
     display: block; /*cambiar luego a none*/
 }
