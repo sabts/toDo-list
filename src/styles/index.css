@@ -1,3 +1,17 @@
+:root{
+    --body-bg-light: #fafafa;
+    --body-bg-dark: #171823;
+     --task-bg-light: #fff;
+     --task-bg-dark: #25273D;
+     --text-color-light: #494c6b;
+     --text-color-dark: #C8CBE7;
+     --text-color-completed: #9092a5;
+     --placeholder-color: #9495a5;
+     --tasks-shadow: rgba(170, 170, 170, 0.3);
+     --tasks-shadow-light: 0px 35px 50px -15px rgba(194, 195, 214, 0.50);;
+     --filter-active: #3a7cfd;
+}
+
 *,
 *::after,
 *::before {
