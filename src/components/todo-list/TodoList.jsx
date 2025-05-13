@@ -8,7 +8,10 @@ import Button from "../button/Button";
 const TodoList = () => {
   const [task, setTask] = useState(""); //el individual 
   const [toDos, setToDos] = useState(TASKS_LIST); //el grupo
-  const [filteredTasks, setFilteredTasks] = useState(TASKS_LIST);
+  const [filter, setFilter] = useState("all")
+
+  const filteredTasks = getFilteredTasks(filter, toDos);
+
   return (
     <>
       <div className={styles["header"]}>
@@ -52,9 +55,9 @@ const TodoList = () => {
         <span onClick={() => clearCompletedTasks(toDos, setToDos)}>Clear Complete</span>
       </div>
       <div className={styles["filters"]}>
-          <Button action={() => setFilteredTasks(filterAll(toDos))}>All</Button>
-          <Button action={() => setFilteredTasks(filterActive(toDos))}>Active</Button>
-          <Button action={() => setFilteredTasks(filterCompleted(toDos))}>Complete</Button>
+      <Button action={() => setFilter("all")} isActive={filter === "all"}>All</Button>
+      <Button action={() => setFilter("active")} isActive={filter === "active"}>Active</Button>
+      <Button action={() => setFilter("completed")} isActive={filter === "completed"}>Completed</Button>>
       </div>
       </main>
     </>
@@ -111,4 +114,9 @@ const filterAll = (toDos) => {
   return toDos;
 };
 
+const getFilteredTasks = (filter, toDos) => {
+  if (filter === "active") return filterActive(toDos);
+  if (filter === "completed") return filterCompleted(toDos);
+  return toDos;
+};
 export default TodoList
