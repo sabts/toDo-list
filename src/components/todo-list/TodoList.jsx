@@ -25,6 +25,7 @@ const TodoList = () => {
         onSubmit={event => {
           event.preventDefault();
           createTask(task, toDos, setToDos, setTask);
+          event.target.reset();
         }}
         className="form"
       >
@@ -57,7 +58,7 @@ const TodoList = () => {
       <div className={styles["filters"]}>
       <Button action={() => setFilter("all")} isActive={filter === "all"}>All</Button>
       <Button action={() => setFilter("active")} isActive={filter === "active"}>Active</Button>
-      <Button action={() => setFilter("completed")} isActive={filter === "completed"}>Completed</Button>>
+      <Button action={() => setFilter("completed")} isActive={filter === "completed"}>Completed</Button>
       </div>
       </main>
     </>
@@ -78,7 +79,6 @@ const createTask = (task, toDos, setToDos, setTask) => {
 
   const newToDos = [...toDos, newTask];
   setToDos(newToDos);
-  setTask("")
 };
 
 const countItemsLeft = (toDos) => {

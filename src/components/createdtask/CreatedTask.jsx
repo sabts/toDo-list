@@ -6,6 +6,7 @@ const CreatedTask = ({ task, toDos, setToDos, completeTask, deleteTask }) =>
               type="checkbox"
               id={`task-${task.id}`} 
               onChange={() => completeTask(task.id, toDos, setToDos)} 
+              checked={task.completed}
               className={styles["task-check"]}/>
             <label htmlFor={`task-${task.id}`} 
             className={styles["task-text"]}>{task.name}</label>
