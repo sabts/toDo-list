@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { v4 } from "uuid";
 import {TASKS_LIST} from "../../constants/tasklist";
+import {FILTERS} from "../../constants/filters"
 import styles from "./todolist.module.css";
 import CreatedTask from "../createdtask/CreatedTask";
 import Button from "../button/Button";
@@ -8,7 +9,7 @@ import Button from "../button/Button";
 const TodoList = () => {
   const [task, setTask] = useState(""); //el individual 
   const [toDos, setToDos] = useState(TASKS_LIST); //el grupo
-  const [filter, setFilter] = useState("all")
+  const [filter, setFilter] = useState(FILTERS.all);
 
   const filteredTasks = getFilteredTasks(filter, toDos);
 
@@ -23,15 +24,14 @@ const TodoList = () => {
       <main className={styles["main"]}>
       <form
         onSubmit={event => {
-          event.preventDefault();
-          createTask(task, toDos, setToDos, setTask);
-          event.target.reset();
+          createTask(task, toDos, setToDos, setTask, event);
         }}
         className="form"
       >
         <label htmlFor="inputtext" className={styles["label-task"]}></label>
         <input
           type="text"
+          name="task"
           placeholder="Create a new todo..."
           id="inputtext"
           value={task}
@@ -56,9 +56,9 @@ const TodoList = () => {
         <span onClick={() => clearCompletedTasks(toDos, setToDos)}>Clear Complete</span>
       </div>
       <div className={styles["filters"]}>
-      <Button action={() => setFilter("all")} isActive={filter === "all"}>All</Button>
-      <Button action={() => setFilter("active")} isActive={filter === "active"}>Active</Button>
-      <Button action={() => setFilter("completed")} isActive={filter === "completed"}>Completed</Button>
+      <Button action={() => setFilter(FILTERS.all)} isActive={filter === FILTERS.all}>All</Button>
+      <Button action={() => setFilter(FILTERS.active)} isActive={filter === FILTERS.active}>Active</Button>
+      <Button action={() => setFilter(FILTERS.completed)} isActive={filter === FILTERS.completed}>Completed</Button>
       </div>
       </main>
     </>
@@ -66,7 +66,8 @@ const TodoList = () => {
 };
 
 // Creación de tarea
-const createTask = (task, toDos, setToDos, setTask) => {
+const createTask = (task, toDos, setToDos, setTask, event) => {
+  event.preventDefault();
   if (task === "") return;
 
   const newTask = {
@@ -75,11 +76,12 @@ const createTask = (task, toDos, setToDos, setTask) => {
     completed: false,
   };
 
-  console.log("Nuevo ID:", newTask.id);
-
   const newToDos = [...toDos, newTask];
   setToDos(newToDos);
+  setTask(""); 
+  //event.target.reset();// este por algun motivo no me funciono
 };
+
 
 const countItemsLeft = (toDos) => {
   return toDos.filter(task => !task.completed).length;
@@ -115,8 +117,9 @@ const filterAll = (toDos) => {
 };
 
 const getFilteredTasks = (filter, toDos) => {
-  if (filter === "active") return filterActive(toDos);
-  if (filter === "completed") return filterCompleted(toDos);
-  return toDos;
+  if (filter === FILTERS.active) return filterActive(toDos);
+  if (filter === FILTERS.completed) return filterCompleted(toDos);
+  return toDos; // FILTERS.all
 };
+
 export default TodoList
